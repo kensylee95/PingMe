@@ -6,7 +6,7 @@ import { apiSubmitRegistration } from "@/services/userService";
 
 
 const CenteredTextField = () => {
-  
+
   useEffect(()=>{
     console.log(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}`)
   },[])
