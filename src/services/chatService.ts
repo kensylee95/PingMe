@@ -2,8 +2,10 @@ import { ChatType } from "../../types";
 
 export const fetchUserChats =
     async (): Promise<ChatType[]> => {
+        const baseUrl: string = process.env.NEXT_PUBLIC_ENDPOINT_URL ||"https://pingme-backend-eg6q.onrender.com";
+
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}/api/chats/user`,
+            const response = await fetch(`${baseUrl}/api/chats/user`,
                 {
                     method: "GET",
                     credentials: "include"

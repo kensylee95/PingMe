@@ -45,6 +45,7 @@ const ChatPage = () => {
     const socket = useRef<Socket|null>(null) // variable that holds the SocketIO Connection
     const timeout = useRef<NodeJS.Timeout | null>(null); // variable holds the timeout id of setTimeout
     const activeChat: ChatType = chats.find((chat) => chat._id === activeChatId)!;
+    const baseUrl: string = process.env.NEXT_PUBLIC_ENDPOINT_URL ||"https://pingme-backend-eg6q.onrender.com";
 
     //Fetches auth user and chats
     const fetchchats = (authUser:IUser|null) => {
@@ -56,7 +57,7 @@ const ChatPage = () => {
                 setAuthUser(authUser)
                 //current socket listener
                socket.current = io(
-                process.env.NEXT_PUBLIC_ENDPOINT_URL || "",
+                baseUrl,
                 {withCredentials:true}
             )
                //transform list in other to set typing status

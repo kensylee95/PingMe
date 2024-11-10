@@ -1,6 +1,6 @@
 
 import { ChatType, IUser} from "../../types"
-const baseUrl: string = process.env.NEXT_PUBLIC_ENDPOINT_URL ||"";
+const baseUrl: string = process.env.NEXT_PUBLIC_ENDPOINT_URL ||"https://pingme-backend-eg6q.onrender.com";
 
 export const apiSubmitRegistration: (username: string, password: string) => Promise<Response> = async (username, password) => {
     const endPoint = `${baseUrl}/api/auth/register`
