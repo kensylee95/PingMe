@@ -1,6 +1,6 @@
 
 import { ChatType, IUser} from "../../types"
-const baseUrl: string = process.env.NEXT_PUBLIC_ENDPOINT_URL  as string;
+const baseUrl: string = process.env.NEXT_PUBLIC_ENDPOINT_URL ||"";
 
 export const apiSubmitRegistration: (username: string, password: string) => Promise<Response> = async (username, password) => {
     const endPoint = `${baseUrl}/api/auth/register`
