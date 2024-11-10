@@ -11,6 +11,7 @@ const CenteredTextField = () => {
   const router = useRouter();
   const submitForm: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
     try {
+      console.log(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}`)
       e.preventDefault()
       if (user.username && user.password) {
         const username = user.username
