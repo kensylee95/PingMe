@@ -1,6 +1,6 @@
 import MiniPictureContainer from "./MiniPictureContainer"
 
-const ActiveUser: React.FC<React.PropsWithChildren<{isOnline?:boolean, subtitle:string, username:string}>> = ({ isOnline,subtitle, username}) => {
+const ActiveUser: React.FC<React.PropsWithChildren<{isOnline?:boolean, subtitle:string, username:string}>> = ({subtitle, username}) => {
     return (<li className="flex w-full gap-4 relative">
       <MiniPictureContainer/>
       {/*User message*/}

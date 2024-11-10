@@ -15,7 +15,7 @@ const CenteredTextField = () => {
       if (user.username && user.password) {
         const username = user.username
         const password = user.password.trim()
-        const response:Response = await apiSubmitLogin(username, password)
+        await apiSubmitLogin(username, password)
         router.push("/chat/inner")
       }
     }
@@ -37,7 +37,7 @@ const CenteredTextField = () => {
           className="w-full text-black p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 shadow-sm transition duration-200"
         />
         <input
-          type="text"
+          type="password"
           placeholder="Enter Password"
           onChange={(e) => setUser((prev: IUser) => ({ ...prev, password: e.target.value }))}
           className="w-full text-black p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 shadow-sm transition duration-200"

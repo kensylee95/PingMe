@@ -1,14 +1,12 @@
 "use client"
 import MiniPictureContainer from "./MiniPictureContainer";
-import { RiCheckDoubleFill, RiCheckFill } from "react-icons/ri";
-import { PropsWithChildren, ReactNode} from "react";
-import { FaClockRotateLeft } from "react-icons/fa6";
-import {MessageType, partChild } from "../../../../types";
+import { PropsWithChildren} from "react";
+import {MessageType} from "../../../../types";
 
 
 const EachFriend: React.FC<PropsWithChildren<{username:string, messages:MessageType[], typingStatus?:boolean}>> = ({username, messages, typingStatus=false}) => {
    const lastMessage = messages[-1]||"";
-  let message: ReactNode = <></>
+ /* let message: ReactNode = <></>
   {
     switch (lastMessage.status||"") {
       case ("read"):
@@ -24,7 +22,7 @@ const EachFriend: React.FC<PropsWithChildren<{username:string, messages:MessageT
         message = <div className="flex items-end justify-end"><FaClockRotateLeft size={18} className="text-gray-400" /></div>
         break;
     }
-  }
+  }*/
   return (<div className="flex w-full gap-4 relative cursor-pointer">
     <span className="absolute top-0 right-0 text-xs text-gray-500">{"10:42"}</span>
     <div className="h-10 w-10">

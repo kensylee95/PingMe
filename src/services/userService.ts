@@ -73,7 +73,7 @@ export const fetchUserByUsername =
     }
 
 
-export const apiAddNewFriend: (user2Id: string) => Promise<any> = async (user2Id: string,) => {
+export const apiAddNewFriend: (user2Id: string) => Promise<ChatType|null> = async (user2Id: string,) => {
     try {
         const response = await fetch(`${baseUrl}/api/chats/createChat`, {
             method: "POST",

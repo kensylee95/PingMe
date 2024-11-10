@@ -41,7 +41,7 @@ const ChatPage = () => {
     const [content, setContent] = useState("")// Adjust the URL as necessary
     const [isLoading, setIsloading] = useState<boolean>(false) //UI Loading state
     const messageBody = useRef<HTMLDivElement|null>(null) // message content
-    const mounted = useRef<Boolean>(false) // variabled that holds the state if component has mounted or not
+    const mounted = useRef<boolean>(false) // variabled that holds the state if component has mounted or not
     const socket = useRef<Socket|null>(null) // variable that holds the SocketIO Connection
     const timeout = useRef<NodeJS.Timeout | null>(null); // variable holds the timeout id of setTimeout
     const activeChat: ChatType = chats.find((chat) => chat._id === activeChatId)!;
@@ -85,7 +85,9 @@ const ChatPage = () => {
                     //set inital active chat
                     setActiveChatId(activeId)
                    
-                  messageBody.current && scrollToPageBottom(messageBody.current)
+                 if( messageBody.current){
+                    scrollToPageBottom(messageBody.current)
+                 }
                     
                 }
             }).finally(()=>setIsloading(false))
@@ -101,13 +103,15 @@ const ChatPage = () => {
             })
         }
     // Cleanup when the component unmounts or when socket changes
-    return () => {
-        socket.current && socket.current.off('userOnline', handleFriendOnline);
-        socket.current && socket.current.off('userOffline', handleFriendOffline);
-        socket.current && socket.current.off(receiveMessage, handleReceivedMessage);
-        socket.current && socket.current.off(receiverTyping, handleUserTyping);
+    return () => { 
+        if(socket.current ){
+        socket.current.off('userOnline', handleFriendOnline);
+        socket.current.off('userOffline', handleFriendOffline);
+        socket.current.off(receiveMessage, handleReceivedMessage);
+        socket.current.off(receiverTyping, handleUserTyping);
+        }
     };
-    }, [])
+    },[])
     
     //subscribe to sockets on mount
     const subscribeSockets = ()=>{
@@ -126,10 +130,12 @@ const ChatPage = () => {
 
     //tell friends that i'm online if active id changes
     useEffect(() => {
-        if (mounted && activeChatId) {
-            socket.current && socket.current.emit(joinChat, activeChatId);
+        if (mounted && activeChatId&&socket.current) {
+             socket.current.emit(joinChat, activeChatId);
         }
-        socket.current && authUser?._id && socket.current.emit("userOnline", authUser._id);
+        if(socket.current&&authUser?._id){
+            socket.current.emit("userOnline", authUser._id);
+        }
     }, [activeChatId]);
     //if chats changes or active chat Id changes
     useEffect(() => {
@@ -171,7 +177,6 @@ const ChatPage = () => {
     //handle when recipient is typing
     const handleUserTyping = (data: { chatId: string, userId: string }) => {
         const { userId } = data;
-    
         // Set typing status as true for the user
         setTypingStatus((prevState) => {
             const updated = prevState.filter(status => !status[userId]==false); // Remove any old status for this user
@@ -198,8 +203,12 @@ const ChatPage = () => {
             const senderId: string = participant!._id;
             const chatId: string = activeChat._id!;
             const messageData:{chatId:string, senderId:string, content:string} = {chatId, senderId, content}
-            socket.current && socket.current.emit(sendMessageEvent, messageData);
-            messageBody.current && scrollToPageBottom(messageBody.current)
+            if(socket.current){
+                socket.current.emit(sendMessageEvent, messageData);
+            }
+            if(messageBody.current){
+                scrollToPageBottom(messageBody.current)
+            }
             setContent("");
         }
     };
@@ -218,8 +227,10 @@ const ChatPage = () => {
         try {
             if (userId) {
                 const response:ChatType|null = await apiAddNewFriend(userId);
-                response && setChats((prev)=>([response, ...prev,]))
-                response && setActiveChatId(response._id)
+                if(response){
+                    setChats((prev)=>([response, ...prev,]))
+                    setActiveChatId(response._id)
+                }
                 setSearchedFriend(null)
             }
         }
@@ -232,7 +243,9 @@ const ChatPage = () => {
     //handles user typing event
     const handleTyping: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
         const data:{chatId:string, userId: string} = {chatId:activeChatId!, userId:authUser!._id!}
-        socket.current && socket.current.emit(senderTyping, data);
+       if(socket.current){
+         socket.current.emit(senderTyping, data);
+       }
         setContent(e.target.value)
     };
     

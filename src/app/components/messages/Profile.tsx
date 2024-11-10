@@ -1,5 +1,5 @@
 "use client"
-import { FaPlus, FaSearch} from "react-icons/fa";
+import { FaPlus} from "react-icons/fa";
 import MiniPictureContainer from "./MiniPictureContainer";
 
 interface ProfileInterface {

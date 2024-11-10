@@ -1,4 +1,4 @@
-const verifyJWT: (token: string, secret: string) => Promise<{ isValid: boolean, decoded?: any }> = async (token, secret) => {
+const verifyJWT: (token: string, secret: string) => Promise<{ isValid: boolean, decoded?: string }> = async (token, secret) => {
     try {
         const encoder = new TextEncoder();
         const key = await crypto.subtle.importKey(
@@ -37,7 +37,8 @@ const verifyJWT: (token: string, secret: string) => Promise<{ isValid: boolean, 
 
         return { isValid: false };
 
-    } catch (error) {
+    } catch (e) {
+        console.log(e)
         // If any error occurs (e.g., invalid token format), return as invalid
         return { isValid: false };
     }

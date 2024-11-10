@@ -1,4 +1,4 @@
-const verifyAndGetDecodedJWT:(token:string)=>Promise<string> = async (token:string) => {
+export const verifyAndGetDecodedJWT:(token:string)=>Promise<string> = async (token:string) => {
     const secret = process.env.JWT_SECRET||""
     try {
         const response = await fetch('/api/verifyJWT', {
