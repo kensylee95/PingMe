@@ -1,17 +1,20 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IUser } from "../../../../types";
 import { apiSubmitRegistration } from "@/services/userService";
 
 
 const CenteredTextField = () => {
+  
+  useEffect(()=>{
+    console.log(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}`)
+  },[])
 
   const [user, setUser ] = useState<IUser>({username:"", password:""})
   const router = useRouter();
   const submitForm: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
     try {
-      console.log(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}`)
       e.preventDefault()
       if (user.username && user.password) {
         const username = user.username
